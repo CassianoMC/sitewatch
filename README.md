@@ -10,7 +10,7 @@
 ![AWS](https://img.shields.io/badge/AWS-EC2-orange)
 ![Linux](https://img.shields.io/badge/Linux-Ubuntu-green)
 
-Projeto desenvolvido para demonstrar conhecimentos práticos em Desenvolvimento Backend, APIs REST, Banco de Dados, Containerização, CI/CD, Monitoramento e Observabilidade utilizando tecnologias amplamente adotadas em ambientes modernos.
+Projeto em desenvolvimento para demonstrar conhecimentos em APIs REST, Banco de Dados, Containerização, CI/CD, Monitoramento e Observabilidade utilizando tecnologias amplamente adotadas em ambientes modernos.
 
 ---
 
