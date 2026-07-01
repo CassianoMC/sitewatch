@@ -1,4 +1,4 @@
-# 🌐 SiteWatch - Plataforma de Monitoramento de Sites
+# SiteWatch - Plataforma de Monitoramento de Sites
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
@@ -8,422 +8,331 @@
 ![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-orange)
 ![Grafana](https://img.shields.io/badge/Grafana-Dashboards-yellow)
 ![AWS](https://img.shields.io/badge/AWS-EC2-orange)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)
 ![Linux](https://img.shields.io/badge/Linux-Ubuntu-green)
 
-Projeto em desenvolvimento para demonstrar conhecimentos em APIs REST, Banco de Dados, Containerização, CI/CD, Monitoramento e Observabilidade utilizando tecnologias amplamente adotadas em ambientes modernos.
+SiteWatch é uma plataforma de monitoramento de sites criada para demonstrar, em um projeto prático, o uso de APIs REST, banco de dados, containers, CI/CD, cloud, infraestrutura como código e observabilidade.
+
+A aplicação permite cadastrar sites, executar verificações de disponibilidade, registrar histórico de checks, exportar métricas no formato Prometheus e visualizar indicadores em dashboards no Grafana.
 
 ---
 
-# 📋 Sobre o Projeto
+## Visão Geral
 
-O SiteWatch é uma plataforma de monitoramento de sites desenvolvida para realizar verificações periódicas de disponibilidade e tempo de resposta de aplicações e serviços web.
+O projeto é composto por:
 
-A solução é composta por uma API desenvolvida com FastAPI, um serviço responsável pela execução dos monitoramentos, um banco de dados PostgreSQL para persistência dos resultados e uma stack de observabilidade baseada em Prometheus e Grafana.
-
-Todo o ambiente é executado em containers Docker e implantado automaticamente em uma instância AWS EC2 através de uma pipeline CI/CD utilizando GitHub Actions.
-
-### Conceitos Praticados
-
-* Python
-* FastAPI
-* APIs REST
-* PostgreSQL
-* Docker
-* Docker Compose
-* GitHub Actions
-* CI/CD
-* AWS EC2
-* Prometheus
-* Grafana
-* Monitoramento
-* Observabilidade
-* Coleta de Métricas
-* Desenvolvimento Backend
-* Automação de Infraestrutura
+* API REST desenvolvida com FastAPI
+* Worker de monitoramento periódico em Python
+* Banco PostgreSQL para persistência dos sites e verificações
+* Prometheus para coleta de métricas
+* Grafana para visualização dos indicadores
+* Docker Compose para execução da stack
+* GitHub Actions para deploy automatizado em AWS EC2
+* Terraform para provisionamento básico da infraestrutura AWS
 
 ---
 
-# 🔗 Links
-
-## 📂 Repositório
-
-https://github.com/cassianomc/sitewatch
-
----
-
-# 🏗️ Arquitetura da Solução
+## Arquitetura da Solução
 
 ```text
                      Git Push
-                         │
-                         ▼
-┌──────────────────────────────────┐
-│             GitHub               │
-└───────────────┬──────────────────┘
-                │
-                ▼
-┌──────────────────────────────────┐
-│         GitHub Actions           │
-│      Build + Deploy Pipeline     │
-└───────────────┬──────────────────┘
-                │
-                ▼
-┌──────────────────────────────────┐
-│              AWS EC2             │
-└───────────────┬──────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────────┐
-│                Docker Host                  │
-│                                             │
-│  ├── SiteWatch API                          │
-│  ├── SiteWatch Monitor                      │
-│  ├── PostgreSQL                             │
-│  ├── Prometheus                             │
-│  └── Grafana                                │
-└─────────────────────────────────────────────┘
+                         |
+                         v
+                 GitHub Repository
+                         |
+                         v
+                  GitHub Actions
+                         |
+                         v
+                      AWS EC2
+                         |
+                         v
+                  Docker Compose
+                         |
+        +----------------+----------------+
+        |                |                |
+        v                v                v
+   SiteWatch API   SiteWatch Monitor   PostgreSQL
+        |
+        v
+   Prometheus
+        |
+        v
+     Grafana
 ```
 
 ---
 
-# 📊 Arquitetura de Monitoramento
+## Fluxo de Monitoramento
 
 ```text
-          Verificações de Sites
-                    │
-                    ▼
-            SiteWatch Monitor
-                    │
-                    ▼
-               PostgreSQL
-                    │
-                    ▼
-               FastAPI API
-                    │
-                    ▼
-          Métricas Prometheus
-                    │
-                    ▼
-               Prometheus
-                    │
-                    ▼
-                 Grafana
+Sites cadastrados
+       |
+       v
+SiteWatch Monitor
+       |
+       v
+POST /sites/{id}/check
+       |
+       v
+Registro no PostgreSQL
+       |
+       v
+Métricas em /metrics
+       |
+       v
+Prometheus + Grafana
 ```
 
 ---
 
-# 📸 Evidências do Projeto
+## Evidências do Projeto
 
-As imagens abaixo demonstram o funcionamento real da plataforma, incluindo endpoints da API, métricas de monitoramento, pipeline CI/CD e dashboards de observabilidade.
+As imagens abaixo demonstram a aplicação em funcionamento, incluindo deploy automatizado, containers em produção, documentação da API, endpoints, métricas e dashboard de observabilidade.
 
-## 🔄 Pipeline CI/CD
-
-### Deploy Automatizado com GitHub Actions
+### Pipeline CI/CD com GitHub Actions
 
 ![GitHub Actions Deploy](docs/images/github-actions-deploy.png)
 
----
-
-## 🐳 Containers em Produção
-
-### Containers Docker Executando na AWS EC2
+### Containers Docker em Execução na AWS EC2
 
 ![Docker Containers](docs/images/ec2-docker-containers.png)
 
----
-
-## 📚 Documentação da API
-
-### FastAPI Swagger UI
+### Documentação Interativa da API
 
 ![Swagger API](docs/images/swagger-api.png)
 
----
-
-## 🌐 Sites Monitorados
-
-### Endpoint de Sites
+### Listagem de Sites Monitorados
 
 ![Sites Endpoint](docs/images/sites-endpoint.png)
 
----
-
-## ❤️ Health Check
-
-### Endpoint de Saúde da Aplicação
+### Health Check da Aplicação
 
 ![Health Endpoint](docs/images/health-endpoint.png)
 
----
-
-## 📈 Métricas Exportadas
-
-### Endpoint de Métricas Prometheus
+### Métricas Exportadas para Prometheus
 
 ![Prometheus Metrics](docs/images/prometheus-metrics.png)
 
----
-
-## 📊 Dashboard de Monitoramento
-
-### Dashboard Overview no Grafana
+### Dashboard no Grafana
 
 ![Grafana Dashboard](docs/images/grafana-dashboard.png)
 
 ---
 
-# 🛠️ Tecnologias Utilizadas
+## Funcionalidades
 
-## Desenvolvimento Backend
-
-* Python
-* FastAPI
-
-## Banco de Dados
-
-* PostgreSQL
-
-## Containerização
-
-* Docker
-* Docker Compose
-
-## CI/CD
-
-* GitHub Actions
-
-## Cloud
-
-* AWS EC2
-
-## Monitoramento e Observabilidade
-
-* Prometheus
-* Grafana
-
-## Sistema Operacional
-
-* Ubuntu Linux
-
-## Controle de Versão
-
-* Git
-* GitHub
+* Cadastro de sites para monitoramento
+* Listagem de sites cadastrados
+* Execução manual de verificação por site
+* Monitoramento periódico via worker
+* Registro de status HTTP, disponibilidade e tempo de resposta
+* Histórico de verificações por site
+* Endpoint de health check
+* Endpoint de métricas compatível com Prometheus
+* Dashboard de acompanhamento no Grafana
+* Deploy automatizado em instância EC2
 
 ---
 
-# 📁 Estrutura do Projeto
+## Endpoints Principais
+
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| `GET` | `/` | Verifica se a API está respondendo |
+| `GET` | `/health` | Retorna o status de saúde da aplicação |
+| `GET` | `/metrics` | Exporta métricas no formato Prometheus |
+| `GET` | `/sites` | Lista os sites cadastrados |
+| `POST` | `/sites` | Cadastra um novo site |
+| `POST` | `/sites/{site_id}/check` | Executa uma verificação manual |
+| `GET` | `/sites/{site_id}/checks` | Lista o histórico de verificações |
+
+Exemplo de cadastro:
+
+```json
+{
+  "name": "GitHub",
+  "url": "https://github.com"
+}
+```
+
+---
+
+## Métricas Exportadas
+
+| Métrica | Descrição |
+| --- | --- |
+| `sitewatch_site_up` | Status do site monitorado, usando `1` para online e `0` para offline |
+| `sitewatch_response_time_ms` | Tempo de resposta do site em milissegundos |
+| `sitewatch_checks_total` | Total de verificações executadas por site |
+
+---
+
+## Tecnologias Utilizadas
+
+* Python 3.12
+* FastAPI
+* PostgreSQL
+* Docker
+* Docker Compose
+* Prometheus
+* Grafana
+* GitHub Actions
+* AWS EC2
+* Terraform
+* Ubuntu Linux
+
+---
+
+## Estrutura do Projeto
 
 ```text
 sitewatch/
-│
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml
-│
 ├── app/
 │   ├── Dockerfile
 │   ├── main.py
 │   ├── monitor.py
 │   └── requirements.txt
-│
 ├── docs/
 │   └── images/
-│
 ├── infrastructure/
 │   └── terraform/
-│
+│       ├── backend.tf
+│       ├── main.tf
+│       ├── outputs.tf
+│       └── variables.tf
 ├── observability/
-│   ├── grafana/
 │   └── prometheus/
-│
+│       └── prometheus.yml
 ├── docker-compose.yml
-├── README.md
-└── .gitignore
+└── README.md
 ```
 
 ---
 
-# 🐳 Containerização
+## Execução com Docker Compose
 
-Toda a plataforma é executada em containers Docker, garantindo portabilidade, padronização e facilidade de implantação em diferentes ambientes.
-
-### Serviços Executados
-
-* SiteWatch API
-* SiteWatch Monitor
-* PostgreSQL
-* Prometheus
-* Grafana
-
-### Benefícios
-
-* Padronização de ambiente
-* Facilidade de Deploy
-* Isolamento de serviços
-* Escalabilidade
-* Reprodutibilidade
-
----
-
-# 🔄 Pipeline CI/CD
-
-Toda alteração enviada para a branch principal dispara automaticamente a pipeline de deploy.
+Suba a stack localmente:
 
 ```bash
-git add .
-git commit -m "Atualização"
-git push origin main
+docker compose up -d --build
 ```
 
-A pipeline executa automaticamente:
+Serviços publicados:
 
-1. Checkout do código
-2. Build da imagem Docker
-3. Publicação da imagem
-4. Conexão SSH com a EC2
-5. Pull da nova imagem
-6. Atualização dos containers
-7. Deploy automático da nova versão
+| Serviço | URL |
+| --- | --- |
+| API | `http://localhost:8000` |
+| Swagger UI | `http://localhost:8000/docs` |
+| Prometheus | `http://localhost:9090` |
+| Grafana | `http://localhost:3000` |
+| PostgreSQL | `localhost:5432` |
 
-Todo o processo de implantação é realizado através do GitHub Actions.
+Para acompanhar os logs:
 
----
+```bash
+docker compose logs -f
+```
 
-# 📈 Monitoramento e Observabilidade
+Para parar os containers:
 
-Foi implementada uma stack de observabilidade para monitorar disponibilidade, tempo de resposta e funcionamento da plataforma.
-
-### Prometheus
-
-Responsável pela coleta e armazenamento das métricas exportadas pela aplicação.
-
-### Grafana
-
-Responsável pela visualização e análise das métricas através de dashboards.
-
-### Métricas Coletadas
-
-* Disponibilidade dos sites
-* Tempo de resposta
-* Total de verificações executadas
-* Status da aplicação
-* Estatísticas de monitoramento
-
-### Dashboard Overview
-
-* Monitored Sites
-* Online Sites
-* Offline Sites
-* Availability
-* Average Response Time
-* Fastest Site
-* Slowest Site
-* Total Checks
+```bash
+docker compose down
+```
 
 ---
 
-# 🎓 Habilidades Demonstradas
+## Deploy Automatizado
 
-✅ Python
+O deploy é executado pelo GitHub Actions quando há push na branch `main`.
 
-✅ FastAPI
+O workflow acessa a instância EC2 por SSH, atualiza o repositório no servidor e recria os containers com Docker Compose:
 
-✅ APIs REST
+```text
+git pull origin main
+docker compose up -d --build
+docker image prune -f
+```
 
-✅ PostgreSQL
+Secrets utilizados pela pipeline:
 
-✅ Docker
-
-✅ Docker Compose
-
-✅ Git
-
-✅ GitHub
-
-✅ GitHub Actions
-
-✅ CI/CD
-
-✅ AWS EC2
-
-✅ Linux
-
-✅ Prometheus
-
-✅ Grafana
-
-✅ Monitoramento
-
-✅ Observabilidade
-
-✅ Coleta de Métricas
-
-✅ Desenvolvimento Backend
-
-✅ Troubleshooting
-
-✅ Automação de Infraestrutura
+* `EC2_HOST`
+* `EC2_USER`
+* `EC2_SSH_KEY`
 
 ---
 
-# 🛣️ Roadmap
+## Infraestrutura AWS
 
-## Concluído
+O diretório `infrastructure/terraform` contém a base de infraestrutura para execução do projeto na AWS:
 
-* [x] Backend FastAPI
-* [x] Serviço de Monitoramento de Sites
-* [x] Integração com PostgreSQL
-* [x] Aplicação Containerizada com Docker
+* VPC
+* Subnet pública
+* Internet Gateway
+* Route Table
+* Security Group
+* Instância EC2 Ubuntu
+
+Variáveis principais:
+
+* `aws_region`
+* `project_name`
+* `my_ip`
+* `key_name`
+
+---
+
+## Roadmap
+
+### Concluído
+
+* [x] Backend com FastAPI
+* [x] Cadastro e listagem de sites
+* [x] Serviço de monitoramento periódico
+* [x] Registro de verificações no PostgreSQL
+* [x] Containerização com Docker Compose
+* [x] Exportação de métricas para Prometheus
+* [x] Dashboard no Grafana
+* [x] Pipeline de deploy com GitHub Actions
 * [x] Deploy em AWS EC2
-* [x] Pipeline CI/CD com GitHub Actions
-* [x] Exportação de Métricas para Prometheus
-* [x] Dashboard Grafana
-* [x] Endpoint de Health Check
-* [x] Monitoramento de Disponibilidade de Sites
-* [x] Monitoramento de Tempo de Resposta
+* [x] Infraestrutura base com Terraform
 
-## Próximas Evoluções
+### Próximas Evoluções
 
-* [ ] Integração com Alertmanager
-* [ ] Notificações via Discord
-* [ ] Monitoramento de Certificados SSL
-* [ ] Notificações por E-mail
-* [ ] Relatórios Históricos de Disponibilidade
-* [ ] Dashboard Dedicado de Performance
-* [ ] Integração com Loki
-* [ ] Centralização de Logs
+* [ ] Script de inicialização/migração do banco de dados
+* [ ] Alertas com Alertmanager
+* [ ] Notificações via Discord ou e-mail
+* [ ] Monitoramento de certificados SSL
+* [ ] Centralização de logs com Loki
+* [ ] Dashboard dedicado de performance
 * [ ] Deploy em Kubernetes
-* [ ] Implementação de GitOps
+* [ ] GitOps
 
 ---
 
-# 👨‍💻 Autor
+## Habilidades Demonstradas
 
-## Cassiano Marinho
+* Desenvolvimento Backend
+* Criação de APIs REST
+* Persistência com banco relacional
+* Containerização de aplicações
+* Automação de deploy
+* CI/CD
+* Provisionamento de infraestrutura
+* Observabilidade
+* Coleta de métricas
+* Troubleshooting em ambiente Linux
+* Deploy de aplicação em cloud
+
+---
+
+## Autor
+
+**Cassiano Marinho**
 
 DevOps | Cloud | Observabilidade | Desenvolvimento Backend
 
-### Tecnologias
-
-* Python
-* FastAPI
-* PostgreSQL
-* Docker
-* AWS
-* GitHub Actions
-* Prometheus
-* Grafana
-* Linux
-
-### Atualmente Estudando
-
-* Kubernetes
-* GitOps
-* Terraform Avançado
-* Observabilidade
-* Site Reliability Engineering (SRE)
-
----
-
-⭐ Este projeto faz parte da minha jornada de evolução profissional nas áreas de Desenvolvimento Backend, DevOps, Cloud Computing, Monitoramento, Observabilidade e Site Reliability Engineering.
+Este projeto faz parte da minha jornada de evolução profissional nas áreas de Desenvolvimento Backend, DevOps, Cloud Computing, Monitoramento, Observabilidade e Site Reliability Engineering.
